@@ -1,7 +1,10 @@
 import UIKit
+import FirebaseStorage
 
 class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var profileImageView: UIImageView!
+
     var user: User?
     var tasks: [ToDo] = []
 
@@ -24,6 +27,19 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     print("Failed to fetch tasks: \(error.localizedDescription)")
                 }
             }
+            
+        // Fetch and display profile picture
+            if let profileImageUrl = user.profileImageUrl {
+                let storageRef = Storage.storage().reference(forURL: profileImageUrl)
+                storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
+                    if let error = error {
+                        print("Failed to fetch profile image: \(error.localizedDescription)")
+                    } else if let data = data, let image = UIImage(data: data) {
+                        self.profileImageView.image = image
+                    }
+                }
+            }
+            
         } else {
             print("No user provided")
         }

@@ -5,5 +5,6 @@ struct User: Codable {
     var userID: String
     var userEmail: String
     var password: String
+    var profileImageUrl: String?
     var tasks: [ToDo] = []
 }

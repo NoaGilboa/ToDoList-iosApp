@@ -1,15 +1,13 @@
-//firebase realtime
 import Foundation
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseStorage
 
 class DBManager {
     
-    // Singleton instance of DBManager
     static let shared = DBManager()
     private let db = Database.database().reference()
     
-    // Private initializer to ensure only one instance is created
     private init() {}
     
     func registerUser(name: String, email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
@@ -20,43 +18,44 @@ class DBManager {
                 completion(.failure(error))
             } else if let authResult = authResult {
                 print("User created successfully with userID: \(authResult.user.uid)")
-                let user = User(name: name, userID: authResult.user.uid, userEmail: email, password: password)
-                self.saveUserToDB(user: user, completion: completion)
+                let user = User(name: name, userID: authResult.user.uid, userEmail: email, password: password, profileImageUrl: "")
+                completion(.success(user))
             }
         }
     }
     
     func loginUser(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        print("Attempting to login with email: \(email) , password: \(password)")
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Error logging in: \(error.localizedDescription)")
-                completion(.failure(error))
-            } else if let authResult = authResult {
-                print("Login successful for userID: \(authResult.user.uid)")
-                self.getUserFromDB(userID: authResult.user.uid, completion: completion)
+            print("Attempting to login with email: \(email) , password: \(password)")
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                if let error = error {
+                    print("Error logging in: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else if let authResult = authResult {
+                    print("Login successful for userID: \(authResult.user.uid)")
+                    self.getUserFromDB(userID: authResult.user.uid, completion: completion)
+                }
             }
         }
-    }
-    
-    func logoutUser(completion: @escaping (Result<Void, Error>) -> Void) {
-        print("Attempting to logout")
-        do {
-            try Auth.auth().signOut()
-            print("Logout successful")
-            completion(.success(()))
-        } catch let signOutError as NSError {
-            print("Error signing out: \(signOutError.localizedDescription)")
-            completion(.failure(signOutError))
+        
+        func logoutUser(completion: @escaping (Result<Void, Error>) -> Void) {
+            print("Attempting to logout")
+            do {
+                try Auth.auth().signOut()
+                print("Logout successful")
+                completion(.success(()))
+            } catch let signOutError as NSError {
+                print("Error signing out: \(signOutError.localizedDescription)")
+                completion(.failure(signOutError))
+            }
         }
-    }
-    
-    func saveUserToDB(user: User, completion: @escaping (Result<User, Error>) -> Void) {
+        
+    func saveUserToDB(user: User, profileImageUrl: URL, completion: @escaping (Result<User, Error>) -> Void) {
         print("Saving user to database with userID: \(user.userID)")
         let userDict: [String: Any] = [
             "name": user.name,
             "email": user.userEmail,
-            "password": user.password
+            "password": user.password,
+            "profileImageUrl": profileImageUrl.absoluteString
         ]
         db.child("users").child(user.userID).setValue(userDict) { error, _ in
             if let error = error {
@@ -78,6 +77,7 @@ class DBManager {
                     userID: userID,
                     userEmail: value["email"] as? String ?? "",
                     password: value["password"] as? String ?? "",
+                    profileImageUrl: value["profileImageUrl"] as? String ?? "",
                     tasks: [] // Tasks will be fetched separately
                 )
                 self.getTasks(userID: userID) { result in
@@ -162,6 +162,4 @@ class DBManager {
         }
     }
     
-    
 }
-    
