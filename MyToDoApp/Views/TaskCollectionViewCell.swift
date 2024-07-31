@@ -6,20 +6,21 @@ class TaskCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var vImage: UIImageView!
     @IBOutlet weak var xImage: UIImageView!
     @IBOutlet weak var statusLabel: UILabel!
-    var status: Int!
     var task: ToDo!
+    var status: Bool?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupGestureRecognizers()
     }
     
     private func setupGestureRecognizers() {
-        if status == 1 {
+        if status == true {
             vImageTapped()
             return
         }
         
-        if status == 0 {
+        if status == false {
             xImageTapped()
             return
         }
@@ -33,50 +34,40 @@ class TaskCollectionViewCell: UICollectionViewCell {
         xImage.isUserInteractionEnabled = true
         xImage.addGestureRecognizer(xImageTapGesture)
         
+        task.status=status
+        
+        DBManager.shared.updateTask(task: task){ result in
+            switch result {
+            case .success:
+                print("Task update successfully")
+            case .failure(let error):
+                print("Failed to update task: \(error.localizedDescription)")
+            }
+        }
     }
 
     @objc private func vImageTapped() {
         statusLabel.text = "Done!"
-        task.status=1
+        status=true
         statusLabel.textColor=UIColor(red: 0, green: 0.7, blue: 0.2, alpha: 1)
         xImage.isHidden=true
         vImage.isHidden=true
-        
-        DBManager.shared.updateTask(task: task){ result in
-            switch result {
-            case .success:
-                print("Task update successfully")
-            case .failure(let error):
-                print("Failed to update task: \(error.localizedDescription)")
-            }
-        }
-        
     }
         
     @objc private func xImageTapped() {
         statusLabel.text = "Canceled!"
-        task.status=0
+        status=false
         statusLabel.textColor=UIColor(red: 1, green: 0, blue: 0, alpha: 1)
-        xImage.isHidden=true
-        vImage.isHidden=true
-        
-        DBManager.shared.updateTask(task: task){ result in
-            switch result {
-            case .success:
-                print("Task update successfully")
-            case .failure(let error):
-                print("Failed to update task: \(error.localizedDescription)")
-            }
+            xImage.isHidden=true
+            vImage.isHidden=true
         }
-        
-    }
-    
     
     func configure(name: String, description: String, task: ToDo){
         taskNameLabel.text=name
         taskDescriptionLabel.text=description+"\t"
-        self.status=task.status
         self.task=task
-        setupGestureRecognizers()
+        self.status=task.status
     }
+    
+    
 }

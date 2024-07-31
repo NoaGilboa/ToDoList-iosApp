@@ -92,13 +92,11 @@ class DBManager {
                         completion(.failure(error))
                     }
                 }
-                let fetchError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found"])
-//                print("User not found")
-//                completion(.failure(fetchError))
             }
         } withCancel: { error in
-            print("Error fetching user: \(error.localizedDescription)")
-            completion(.failure(error))
+            let fetchError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found"])
+            print("User not found")
+            completion(.failure(fetchError))
         }
     }
     
