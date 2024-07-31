@@ -39,6 +39,18 @@ class DBManager {
         }
     }
     
+    func logoutUser(completion: @escaping (Result<Void, Error>) -> Void) {
+        print("Attempting to logout")
+        do {
+            try Auth.auth().signOut()
+            print("Logout successful")
+            completion(.success(()))
+        } catch let signOutError as NSError {
+            print("Error signing out: \(signOutError.localizedDescription)")
+            completion(.failure(signOutError))
+        }
+    }
+    
     func saveUserToDB(user: User, completion: @escaping (Result<User, Error>) -> Void) {
         print("Saving user to database with userID: \(user.userID)")
         let userDict: [String: Any] = [
@@ -65,11 +77,21 @@ class DBManager {
                     name: value["name"] as? String ?? "",
                     userID: userID,
                     userEmail: value["email"] as? String ?? "",
-                    password: value["password"] as? String ?? ""
-                )
-                print("User fetched successfully: \(user)")
-                completion(.success(user))
-            } else {
+                    password: value["password"] as? String ?? "",
+                    tasks: [] // Tasks will be fetched separately
+                                    )
+                self.getTasks(userID: userID) { result in
+                    switch result {
+                    case .success(let tasks):
+                        var userWithTasks = user
+                        userWithTasks.tasks = tasks
+                        print("User fetched successfully with tasks: \(userWithTasks)")
+                        completion(.success(userWithTasks))
+                    case .failure(let error):
+                        print("Failed to fetch tasks: \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                }
                 let fetchError = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found"])
                 print("User not found")
                 completion(.failure(fetchError))
@@ -102,20 +124,20 @@ class DBManager {
     
     func getTasks(userID: String, completion: @escaping (Result<[ToDo], Error>) -> Void) {
             print("Fetching tasks for userID: \(userID)")
-            db.child("users").child(userID).child("tasks").observeSingleEvent(of: .value) { snapshot, _ in
+            db.child("users").child(userID).child("tasks").observeSingleEvent(of: .value) { snapshot in
                 var tasks: [ToDo] = []
                 for child in snapshot.children.allObjects as! [DataSnapshot] {
                     if let value = child.value as? [String: Any],
                        let taskID = value["taskID"] as? String,
                        let name = value["name"] as? String,
                        let description = value["description"] as? String,
-                       let status = value["status"] as? Bool,
                        let createdBy = value["createdBy"] as? String {
+                        let status = value["status"] as? Bool
                         let task = ToDo(taskID: taskID, name: name, description: description, status: status, createdBy: createdBy)
-                        tasks.append(task)
+                        tasks.append(task.self)
                     }
                 }
-                print("Tasks fetched successfully: \(tasks.count) tasks found")
+                print("Tasks fetched successfully: \(tasks.count) tasks found: \(tasks)")
                 completion(.success(tasks))
             } withCancel: { error in
                 print("Error fetching tasks: \(error.localizedDescription)")
@@ -132,11 +154,11 @@ class DBManager {
 //import FirebaseAuth
 //
 //class DBManager {
-//    
+//
 //    // Singleton instance of DBManager
 //    static let shared = DBManager()
 //    private let db = Firestore.firestore()
-//    
+//
 //    // Private initializer to ensure only one instance is created
 //    private init() {}
 //
@@ -154,7 +176,7 @@ class DBManager {
 //            }
 //        }
 //    }
-//    
+//
 //    func loginUser(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
 //        print("Attempting to login with email: \(email)")
 //        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
@@ -167,7 +189,7 @@ class DBManager {
 //            }
 //        }
 //    }
-//    
+//
 //    func saveUserToDB(user: User, completion: @escaping (Result<User, Error>) -> Void) {
 //        print("Saving user to database with userID: \(user.userID)")
 //        do {
@@ -186,7 +208,7 @@ class DBManager {
 //            completion(.failure(error))
 //        }
 //    }
-//    
+//
 //    func getUserFromDB(userID: String, completion: @escaping (Result<User, Error>) -> Void) {
 //        print("Fetching user from database with userID: \(userID)")
 //        // Use Firestore's getDocument method to retrieve the user document
@@ -204,7 +226,7 @@ class DBManager {
 //            }
 //        }
 //    }
-//    
+//
 //    func addTask(userID: String, task: ToDo, completion: @escaping (Result<Void, Error>) -> Void) {
 //        print("Adding task with taskID: \(task.taskID) for userID: \(userID)")
 //        do {
@@ -222,7 +244,7 @@ class DBManager {
 //            completion(.failure(error))
 //        }
 //    }
-//    
+//
 //    func getTasks(userID: String, completion: @escaping (Result<[ToDo], Error>) -> Void) {
 //        print("Fetching tasks for userID: \(userID)")
 //        db.collection("users").document(userID).collection("tasks").getDocuments { snapshot, error in
@@ -237,5 +259,3 @@ class DBManager {
 //        }
 //    }
 //}
-
-

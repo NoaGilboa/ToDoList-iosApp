@@ -1,9 +1,4 @@
-//
-//  AppDelegate.swift
-//  MyToDoApp
-//
-//  Created by Noa Gilboa on 29/07/2024.
-//
+
 
 import UIKit
 import FirebaseCore

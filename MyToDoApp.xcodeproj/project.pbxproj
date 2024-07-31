@@ -50,6 +50,7 @@
 		69264DD52C57F7E800E24A51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69264DD42C57F7E800E24A51 /* LoginViewController.swift */; };
 		69264DD72C57F7FC00E24A51 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69264DD62C57F7FC00E24A51 /* ToDoViewController.swift */; };
 		695868902C5853CB0017FD14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6958688F2C5853CB0017FD14 /* Assets.xcassets */; };
+		69B6E30C2C5A729200E99C25 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B6E30B2C5A729200E99C25 /* UIViewController.swift */; };
 		69D5C3482C598A3400503E92 /* TaskCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D5C3472C598A3400503E92 /* TaskCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		69264DD42C57F7E800E24A51 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		69264DD62C57F7FC00E24A51 /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
 		6958688F2C5853CB0017FD14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		69B6E30B2C5A729200E99C25 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		69D5C3472C598A3400503E92 /* TaskCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +226,7 @@
 				69264DD42C57F7E800E24A51 /* LoginViewController.swift */,
 				69264DD62C57F7FC00E24A51 /* ToDoViewController.swift */,
 				69D5C3472C598A3400503E92 /* TaskCollectionViewCell.swift */,
+				69B6E30B2C5A729200E99C25 /* UIViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				69264DD02C57F74B00E24A51 /* DBManager.swift in Sources */,
 				69264DD32C57F7D300E24A51 /* RegisterViewController.swift in Sources */,
 				69264DCD2C57F71800E24A51 /* ToDo.swift in Sources */,
+				69B6E30C2C5A729200E99C25 /* UIViewController.swift in Sources */,
 				69264DD72C57F7FC00E24A51 /* ToDoViewController.swift in Sources */,
 				69264DD52C57F7E800E24A51 /* LoginViewController.swift in Sources */,
 				69D5C3482C598A3400503E92 /* TaskCollectionViewCell.swift in Sources */,

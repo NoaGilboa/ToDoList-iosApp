@@ -20,6 +20,7 @@ class RegisterViewController: UIViewController {
 
         guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text, !name.isEmpty, !email.isEmpty, !password.isEmpty else {
                     print("One or more text fields are empty")
+                    self.showToast(message: "One or more text fields are empty")
                     return
                 }
         print("Attempting to register user with name: \(name), email: \(email)")
@@ -34,12 +35,16 @@ class RegisterViewController: UIViewController {
                 if let authError = error as NSError? {
                                     switch authError.code {
                                     case AuthErrorCode.emailAlreadyInUse.rawValue:
+                                        self.showToast(message: "The email address is already in use")
                                         print("The email address is already in use.")
                                     case AuthErrorCode.invalidEmail.rawValue:
+                                        self.showToast(message: "The email address is badly formatted")
                                         print("The email address is badly formatted.")
                                     case AuthErrorCode.weakPassword.rawValue:
+                                        self.showToast(message: "The password must be at least 6 characters ")
                                         print("The password must be 6 characters long or more.")
                                     default:
+                                        self.showToast(message: "Error")
                                         print("Error: \(authError.localizedDescription)")
                                     }
                                 }

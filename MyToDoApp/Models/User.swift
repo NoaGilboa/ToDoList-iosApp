@@ -5,5 +5,5 @@ struct User: Codable {
     var userID: String
     var userEmail: String
     var password: String
-    var taskList: [ToDo] = []
+    var tasks: [ToDo] = []
 }
