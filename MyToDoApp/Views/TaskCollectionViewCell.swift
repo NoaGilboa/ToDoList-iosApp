@@ -7,20 +7,19 @@ class TaskCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var xImage: UIImageView!
     @IBOutlet weak var statusLabel: UILabel!
     var task: ToDo!
-    var status: Bool?
+    var status: Int!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupGestureRecognizers()
     }
     
     private func setupGestureRecognizers() {
-        if status == true {
+        if status == 1 {
             vImageTapped()
             return
         }
         
-        if status == false {
+        if status == 0 {
             xImageTapped()
             return
         }
@@ -34,7 +33,6 @@ class TaskCollectionViewCell: UICollectionViewCell {
         xImage.isUserInteractionEnabled = true
         xImage.addGestureRecognizer(xImageTapGesture)
         
-        task.status=status
         
         DBManager.shared.updateTask(task: task){ result in
             switch result {
@@ -48,7 +46,7 @@ class TaskCollectionViewCell: UICollectionViewCell {
 
     @objc private func vImageTapped() {
         statusLabel.text = "Done!"
-        status=true
+        task.status=1
         statusLabel.textColor=UIColor(red: 0, green: 0.7, blue: 0.2, alpha: 1)
         xImage.isHidden=true
         vImage.isHidden=true
@@ -56,7 +54,7 @@ class TaskCollectionViewCell: UICollectionViewCell {
         
     @objc private func xImageTapped() {
         statusLabel.text = "Canceled!"
-        status=false
+        task.status=0
         statusLabel.textColor=UIColor(red: 1, green: 0, blue: 0, alpha: 1)
             xImage.isHidden=true
             vImage.isHidden=true
@@ -67,7 +65,8 @@ class TaskCollectionViewCell: UICollectionViewCell {
         taskDescriptionLabel.text=description+"\t"
         self.task=task
         self.status=task.status
+        setupGestureRecognizers()
+
     }
-    
-    
+
 }
