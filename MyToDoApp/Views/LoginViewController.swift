@@ -18,11 +18,11 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginTapped(_ sender: UIButton) {
         print("Login button tapped")
-        guard let email = emailTextField.text, let password = passwordTextField.text, !email.isEmpty, !password.isEmpty else {
-                    print("One or more text fields are empty")
-                    self.showToast(message: "One or more text fields are empty")
-                    return
-                }
+        guard let email = emailTextField.text, let password = passwordTextField.text, !email.isEmpty, !password.isEmpty else{
+            print("One or more text fields are empty")
+            self.showToast(message: "One or more text fields are empty")
+            return
+        }
             print("Attempting to login with email: \(email) , password: \(password)")
             DBManager.shared.loginUser(email: email, password: password) { result in
                 switch result {
@@ -31,7 +31,6 @@ class LoginViewController: UIViewController {
                 case .failure(let error):
                     print("Login failed: \(error.localizedDescription)")
                     self.showToast(message: "Login failed")
-
                 }
             }
         }

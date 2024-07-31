@@ -4,6 +4,6 @@ struct ToDo: Codable {
     var taskID: String
     var name: String
     var description: String
-    var status: Bool?
+    var status: Int
     var createdBy: String
 }

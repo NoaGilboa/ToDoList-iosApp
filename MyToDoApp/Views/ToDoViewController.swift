@@ -50,7 +50,7 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             
             let taskID = UUID().uuidString
-            let newTask = ToDo(taskID: taskID, name: taskName, description: taskDescription, status: nil, createdBy: user.userID)
+            let newTask = ToDo(taskID: taskID, name: taskName, description: taskDescription, status: -1, createdBy: user.userID)
             
             DBManager.shared.addTask(userID: user.userID, task: newTask) { result in
                 switch result {
@@ -80,7 +80,7 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TaskCell", for: indexPath) as! TaskCollectionViewCell
         let task = tasks[indexPath.row]
         print("task: \(task.name) , \(task.description)")
-        cell.configure(name: task.name, description: task.description, status: task.status)
+        cell.configure(name: task.name, description: task.description, task: task)
         return cell
     }
     
