@@ -65,7 +65,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Login"/>
                                 <connections>
                                     <action selector="loginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DNT-Qt-BYj"/>
-                                    <segue destination="mXO-oG-wkf" kind="custom" identifier="showToDo" id="aGK-XU-aOV"/>
+                                    <segue destination="mXO-oG-wkf" kind="presentation" identifier="showToDo" modalPresentationStyle="fullScreen" id="aGK-XU-aOV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBQ-Aw-nHa">
@@ -148,7 +148,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Resiter"/>
                                 <connections>
-                                    <action selector="registerTapped:" destination="8lV-xM-hkb" eventType="touchUpInside" id="XbA-1x-Rzo"/>
+                                    <action selector="registerTapped:" destination="8lV-xM-hkb" eventType="touchUpInside" id="woo-Hs-K5n"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wQ-sW-ZTz">
@@ -239,6 +239,7 @@
                         <outlet property="emailTextField" destination="ABy-Q3-Vgf" id="iB1-xK-wGH"/>
                         <outlet property="nameTextField" destination="iYE-uf-QXR" id="vQB-F2-k9G"/>
                         <outlet property="passwordTextField" destination="6T8-vL-ePB" id="R49-EG-e5a"/>
+                        <outlet property="registerBtn" destination="Ram-FZ-Evn" id="IHd-ph-lWh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySo-Hq-SU1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -254,10 +255,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="CHk-Au-xmX">
-                                <rect key="frame" x="-30" y="-404" width="393" height="852"/>
+                                <rect key="frame" x="-30" y="-404" width="393" height="886"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To Do List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyl-So-fsN">
-                                <rect key="frame" x="96.666666666666686" y="69" width="200" height="49"/>
+                                <rect key="frame" x="96.666666666666686" y="10" width="200" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="Ga9-h0-leC"/>
                                     <constraint firstAttribute="width" constant="200" id="awD-F7-6im"/>
@@ -267,7 +268,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeN-Kj-Nxe">
-                                <rect key="frame" x="0.0" y="168" width="393" height="684"/>
+                                <rect key="frame" x="0.0" y="109" width="393" height="743"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tQm-qh-a4K">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="684"/>
@@ -283,7 +284,7 @@
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Hi8-R7-vD8">
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Hi8-R7-vD8" customClass="TaskCollectionViewCell" customModule="MyToDoApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="142"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f8Z-Bp-ulS">
@@ -375,6 +376,10 @@
                                                             </constraints>
                                                         </collectionViewCellContentView>
                                                         <size key="customSize" width="377" height="142"/>
+                                                        <connections>
+                                                            <outlet property="taskDescriptionLabel" destination="cS9-IE-Z1V" id="3i2-0x-Dkx"/>
+                                                            <outlet property="taskNameLabel" destination="i2K-X2-dvA" id="j2g-7v-dV0"/>
+                                                        </connections>
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
@@ -394,7 +399,7 @@
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZU-rC-SZy">
-                                <rect key="frame" x="127" y="123" width="139" height="35"/>
+                                <rect key="frame" x="127" y="64" width="139" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="QNb-Es-GMq"/>
                                     <constraint firstAttribute="width" constant="139" id="o4D-5I-kWC"/>
@@ -403,7 +408,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="add a new task"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ey-RX-DDW">
-                                <rect key="frame" x="16" y="99" width="54" height="35"/>
+                                <rect key="frame" x="16" y="40" width="54" height="35"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                 </accessibility>
@@ -455,10 +460,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
