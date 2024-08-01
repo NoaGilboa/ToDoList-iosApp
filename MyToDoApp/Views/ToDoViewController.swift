@@ -1,49 +1,63 @@
 import UIKit
 import FirebaseStorage
+import SideMenu
 
 class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var profileImageView: UIImageView!
 
     var user: User?
     var tasks: [ToDo] = []
-
+    var menu: SideMenuNavigationController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-
+        
         print("ToDoViewController loaded")
         
-        if let user = user {
-            print("Fetching tasks for user: \(user.name)")
-            DBManager.shared.getTasks(userID: user.userID) { result in
-                switch result {
-                case .success(let tasks):
-                    self.tasks = tasks
-                    self.collectionView.reloadData()
-                   print("Tasks fetched successfully")
-                case .failure(let error):
-                    print("Failed to fetch tasks: \(error.localizedDescription)")
-                }
+        setupSideMenu()
+        fetchTasks()
+    }
+    
+   func setupSideMenu() {
+       let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       let menuVC = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+       menuVC.user = user
+       menu = SideMenuNavigationController(rootViewController: menuVC)
+       menu?.leftSide = true
+       SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: view)
+       SideMenuManager.default.leftMenuNavigationController = menu
+   }
+    
+    @IBAction func menuTapped(_ sender: UIBarButtonItem) {
+          present(menu!, animated: true, completion: nil)
+      }
+
+    private func fetchTasks() {
+        guard let user = user else { return }
+        DBManager.shared.getTasks(userID: user.userID) { result in
+            switch result {
+            case .success(let tasks):
+                self.tasks = tasks
+                self.collectionView.reloadData()
+            case .failure(let error):
+                print("Failed to fetch tasks: \(error.localizedDescription)")
             }
-            
-        // Fetch and display profile picture
-            if let profileImageUrl = user.profileImageUrl {
-                let storageRef = Storage.storage().reference(forURL: profileImageUrl)
-                storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
-                    if let error = error {
-                        print("Failed to fetch profile image: \(error.localizedDescription)")
-                    } else if let data = data, let image = UIImage(data: data) {
-                        self.profileImageView.image = image
-                    }
-                }
-            }
-            
-        } else {
-            print("No user provided")
         }
     }
+
+//    private func fetchProfileImage() {
+//        guard let user = user, let profileImageUrl = user.profileImageUrl else { return }
+//        let storageRef = Storage.storage().reference(forURL: profileImageUrl)
+//        storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
+//            if let error = error {
+//                print("Failed to fetch profile image: \(error.localizedDescription)")
+//            } else if let data = data, let image = UIImage(data: data) {
+//                self.profileImageView.image = image
+//            }
+//        }
+//    }
 
     @IBAction func addTaskTapped(_ sender: UIButton) {
         print("Add task button tapped")
@@ -100,20 +114,20 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return cell
     }
     
-    @IBAction func logoutTapped(_ sender: UIButton) {
-        print("Logout button tapped")
-        DBManager.shared.logoutUser { result in
-            switch result {
-            case .success:
-                print("Logout successful")
-                if let loginVC = self.presentingViewController as? LoginViewController {
-                     loginVC.clearTextFields()
-                }
-                // Navigate back to the login screen
-                self.dismiss(animated: true, completion: nil)
-            case .failure(let error):
-                print("Logout failed: \(error.localizedDescription)")
-            }
-        }
-    }
+//    @IBAction func logoutTapped(_ sender: UIButton) {
+//        print("Logout button tapped")
+//        DBManager.shared.logoutUser { result in
+//            switch result {
+//            case .success:
+//                print("Logout successful")
+//                if let loginVC = self.presentingViewController as? LoginViewController {
+//                     loginVC.clearTextFields()
+//                }
+//                // Navigate back to the login screen
+//                self.dismiss(animated: true, completion: nil)
+//            case .failure(let error):
+//                print("Logout failed: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 }
