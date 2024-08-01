@@ -47,17 +47,6 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
 
-//    private func fetchProfileImage() {
-//        guard let user = user, let profileImageUrl = user.profileImageUrl else { return }
-//        let storageRef = Storage.storage().reference(forURL: profileImageUrl)
-//        storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
-//            if let error = error {
-//                print("Failed to fetch profile image: \(error.localizedDescription)")
-//            } else if let data = data, let image = UIImage(data: data) {
-//                self.profileImageView.image = image
-//            }
-//        }
-//    }
 
     @IBAction func addTaskTapped(_ sender: UIButton) {
         print("Add task button tapped")
@@ -113,21 +102,5 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.configure(name: task.name, description: task.description, task: task)
         return cell
     }
-    
-//    @IBAction func logoutTapped(_ sender: UIButton) {
-//        print("Logout button tapped")
-//        DBManager.shared.logoutUser { result in
-//            switch result {
-//            case .success:
-//                print("Logout successful")
-//                if let loginVC = self.presentingViewController as? LoginViewController {
-//                     loginVC.clearTextFields()
-//                }
-//                // Navigate back to the login screen
-//                self.dismiss(animated: true, completion: nil)
-//            case .failure(let error):
-//                print("Logout failed: \(error.localizedDescription)")
-//            }
-//        }
-//    }
+
 }
