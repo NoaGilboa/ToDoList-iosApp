@@ -1,6 +1,6 @@
 Here is a README file for your project with information about Firebase and Shared Preferences:
 
-```markdown
+```
 # ToDoList iOS App
 
 ToDoList is an iOS application that allows users to manage their tasks. Users can register, login, add tasks, and delete tasks. The app uses Firebase for authentication, database, and storage, and utilizes Shared Preferences for storing user data locally.
@@ -35,8 +35,8 @@ Shared Preferences are used to store user data locally on the device, providing 
 
 ## Project Structure
 
-
-```ToDoList/
+```
+ToDoList/
 ├── Controllers/
 │   ├── RegisterViewController.swift
 │   ├── LoginViewController.swift
@@ -54,7 +54,8 @@ Shared Preferences are used to store user data locally on the device, providing 
 │   ├── Assets.xcassets
 │   ├── Info.plist
 │   ├── GoogleService-Info.plist
-├── Podfile```
+├── Podfile
+```
 
 
 
