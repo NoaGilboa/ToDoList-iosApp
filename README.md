@@ -1,5 +1,3 @@
-Here is a README file for your project with information about Firebase and Shared Preferences:
-
 ```
 # ToDoList iOS App
 
@@ -119,7 +117,7 @@ Handles all the database operations, including user registration, login, task ad
 
 ## Video Demonstration
 
-For a detailed video demonstration, [click here](https://github.com/NoaGilboa/ToDoList-iosApp/blob/main/final.mp4).
+For a detailed video demonstration, 
 
 
 https://github.com/user-attachments/assets/38325c02-7218-4519-b047-305f614a5e94
