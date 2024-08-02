@@ -1,4 +1,4 @@
-```
+
 # ToDoList iOS App
 
 ToDoList is an iOS application that allows users to manage their tasks. Users can register, login, add tasks, and delete tasks. The app uses Firebase for authentication, database, and storage, and utilizes Shared Preferences for storing user data locally.
@@ -54,9 +54,6 @@ ToDoList/
 │   ├── GoogleService-Info.plist
 ├── Podfile
 ```
-
-
-
 
 ## Installation
 
@@ -119,8 +116,12 @@ Handles all the database operations, including user registration, login, task ad
 
 For a detailed video demonstration, 
 
-
 https://github.com/user-attachments/assets/38325c02-7218-4519-b047-305f614a5e94
 
-```
+
+
+https://github.com/user-attachments/assets/9eed81fd-59ea-402f-a14e-152c37b17f9b
+
+
+
 
