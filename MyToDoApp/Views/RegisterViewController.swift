@@ -2,7 +2,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseStorage
 
-class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -15,6 +15,11 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
            profileImageView.isUserInteractionEnabled = true
            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectProfileImage))
            profileImageView.addGestureRecognizer(tapGesture)
+        
+            passwordTextField.delegate = self
+            emailTextField.delegate = self
+            passwordTextField.returnKeyType = .done
+            emailTextField.returnKeyType = .done
        }
 
        @objc func selectProfileImage() {
@@ -117,4 +122,11 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         print("Already have account tapped")
         self.dismiss(animated: true, completion: nil)
     }
+    
+    // UITextFieldDelegate method
+    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Dismiss the keyboard
+        return true
+    }
+    
 }

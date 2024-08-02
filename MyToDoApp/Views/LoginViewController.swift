@@ -1,12 +1,18 @@
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         passwordTextField.isSecureTextEntry = true
+        
+        passwordTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.returnKeyType = .done
+        emailTextField.returnKeyType = .done
+
         print("LoginViewController loaded")
     }
     
@@ -51,5 +57,11 @@ class LoginViewController: UIViewController {
     func clearTextFields() {
         emailTextField.text = ""
         passwordTextField.text = ""
+    }
+    
+    // UITextFieldDelegate method
+    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Dismiss the keyboard
+        return true
     }
 }
