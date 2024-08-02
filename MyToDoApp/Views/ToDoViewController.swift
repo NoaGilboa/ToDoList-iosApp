@@ -46,8 +46,7 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
-
-
+    
     @IBAction func addTaskTapped(_ sender: UIButton) {
         print("Add task button tapped")
         let alert = UIAlertController(title: "Add New Task", message: nil, preferredStyle: .alert)
@@ -60,36 +59,53 @@ class ToDoViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
-            guard let self = self,
-                  let taskName = alert.textFields?[0].text, !taskName.isEmpty,
-                  let taskDescription = alert.textFields?[1].text, !taskDescription.isEmpty,
-                  let user = self.user else {
-                print("Invalid input or user not set")
-                return
-            }
-            
-            let taskID = UUID().uuidString
-            let newTask = ToDo(taskID: taskID, name: taskName, description: taskDescription, status: -1, createdBy: user.userID)
-            
-            DBManager.shared.addTask(userID: user.userID, task: newTask) { result in
-                switch result {
+        guard let self = self,
+              let taskName = alert.textFields?[0].text, !taskName.isEmpty,
+              let taskDescription = alert.textFields?[1].text, !taskDescription.isEmpty,
+              let user = self.user else {
+            print("Invalid input or user not set")
+            return
+        }
+        
+        let taskID = UUID().uuidString
+        let newTask = ToDo(taskID: taskID, name: taskName, description: taskDescription, status: -1, createdBy: user.userID)
+        
+        DBManager.shared.addTask(userID: user.userID, task: newTask) { result in
+            switch result {
                 case .success:
                     print("Task added successfully")
-                    self.tasks.append(newTask)
-                    self.collectionView.reloadData()
+                    self.fetchTasks()
                 case .failure(let error):
                     print("Failed to add task: \(error.localizedDescription)")
                 }
             }
         }
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
-            alert.addAction(addAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
+    }
+    
+    @IBAction func deleteTask(_ sender: UIButton) {
+        let point = sender.convert(CGPoint.zero, to: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: point) else { return }
+        
+        let task = tasks[indexPath.row]
+        
+        DBManager.shared.deleteTask(userID: task.createdBy, taskID: task.taskID) { result in
+            switch result {
+            case .success:
+                self.tasks.remove(at: indexPath.row)
+                self.collectionView.deleteItems(at: [indexPath])
+                print("Task deleted successfully")
+            case .failure(let error):
+                print("Failed to delete task: \(error.localizedDescription)")
+            }
         }
+    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tasks.count

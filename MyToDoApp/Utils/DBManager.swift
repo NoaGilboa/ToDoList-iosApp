@@ -162,4 +162,16 @@ class DBManager {
         }
     }
     
+    func deleteTask(userID: String, taskID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+           db.child("users").child(userID).child("tasks").child(taskID).removeValue { error, _ in
+               if let error = error {
+                   print("Error deleting task: \(error.localizedDescription)")
+                   completion(.failure(error))
+               } else {
+                   print("Task deleted successfully")
+                   completion(.success(()))
+               }
+           }
+       }
+    
 }

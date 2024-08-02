@@ -318,13 +318,13 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hw" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cS9-IE-Z1V">
-                                                                    <rect key="frame" x="112" y="50" width="247" height="43"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hw" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cS9-IE-Z1V">
+                                                                    <rect key="frame" x="112" y="50" width="247" height="20.333333333333329"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="43" id="Cmi-YY-X89"/>
+                                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="43" id="Cmi-YY-X89"/>
                                                                         <constraint firstAttribute="width" constant="247" id="xcp-4n-SGL"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -365,34 +365,46 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MZe-fk-3c4">
-                                                                    <rect key="frame" x="3" y="87" width="110" height="35"/>
+                                                                    <rect key="frame" x="10.666666666666664" y="87" width="95" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="35" id="1Mp-Pd-xkG"/>
-                                                                        <constraint firstAttribute="width" constant="110" id="dTf-vy-Wpw"/>
+                                                                        <constraint firstAttribute="width" constant="95" id="dTf-vy-Wpw"/>
                                                                     </constraints>
                                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                                     <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="gray" title="Delete task"/>
+                                                                    <buttonConfiguration key="configuration" style="tinted" image="trash" catalog="system">
+                                                                        <attributedString key="attributedTitle">
+                                                                            <fragment content=" Delete task">
+                                                                                <attributes>
+                                                                                    <font key="NSFont" size="12" name="Helvetica"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                        </attributedString>
+                                                                    </buttonConfiguration>
+                                                                    <connections>
+                                                                        <action selector="deleteTask:" destination="mXO-oG-wkf" eventType="touchUpInside" id="VQf-y1-vzM"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                         </view>
                                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                         <constraints>
-                                                            <constraint firstItem="MZe-fk-3c4" firstAttribute="top" secondItem="uLl-NH-yUh" secondAttribute="bottom" constant="16" id="1vE-BN-qsj"/>
                                                             <constraint firstItem="cS9-IE-Z1V" firstAttribute="top" secondItem="i2K-X2-dvA" secondAttribute="bottom" constant="8" id="3Bc-Yx-hXP"/>
+                                                            <constraint firstItem="e50-WX-nnw" firstAttribute="top" secondItem="i2K-X2-dvA" secondAttribute="bottom" constant="71" id="4fE-JQ-aeq"/>
                                                             <constraint firstItem="i2K-X2-dvA" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="47" id="Dlo-U6-1a9"/>
-                                                            <constraint firstItem="e50-WX-nnw" firstAttribute="top" secondItem="cS9-IE-Z1V" secondAttribute="bottom" constant="20" id="DrL-JG-jZ2"/>
                                                             <constraint firstItem="uLl-NH-yUh" firstAttribute="top" secondItem="rmH-Cq-IuT" secondAttribute="bottom" constant="8" id="MLd-DT-p3i"/>
+                                                            <constraint firstItem="vC2-2U-3Ag" firstAttribute="top" secondItem="i2K-X2-dvA" secondAttribute="bottom" constant="57.329999999999998" id="PvP-fY-qKH"/>
                                                             <constraint firstItem="rmH-Cq-IuT" firstAttribute="top" secondItem="Hi8-R7-vD8" secondAttribute="top" constant="21" id="ScJ-OC-97n"/>
                                                             <constraint firstItem="uLl-NH-yUh" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="-135.5" id="WUb-ZP-hn3"/>
+                                                            <constraint firstItem="YYy-3N-eRc" firstAttribute="top" secondItem="i2K-X2-dvA" secondAttribute="bottom" constant="57.329999999999998" id="YC9-xh-7gA"/>
                                                             <constraint firstItem="vC2-2U-3Ag" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="-18" id="YJC-SY-ism"/>
                                                             <constraint firstItem="cS9-IE-Z1V" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="47" id="hSC-SI-EcG"/>
-                                                            <constraint firstItem="vC2-2U-3Ag" firstAttribute="top" secondItem="cS9-IE-Z1V" secondAttribute="bottom" constant="6.3300000000000001" id="kvs-Tq-ySD"/>
                                                             <constraint firstItem="MZe-fk-3c4" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="-130.5" id="mdt-7m-N1s"/>
                                                             <constraint firstItem="e50-WX-nnw" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="130" id="nKb-5z-i4d"/>
+                                                            <constraint firstItem="MZe-fk-3c4" firstAttribute="top" secondItem="rmH-Cq-IuT" secondAttribute="bottom" constant="45" id="ntw-um-qUg"/>
                                                             <constraint firstItem="i2K-X2-dvA" firstAttribute="top" secondItem="Hi8-R7-vD8" secondAttribute="top" constant="21" id="rgj-dy-IMx"/>
                                                             <constraint firstItem="YYy-3N-eRc" firstAttribute="centerX" secondItem="Hi8-R7-vD8" secondAttribute="centerX" constant="27" id="sNy-7s-6Rv"/>
-                                                            <constraint firstItem="YYy-3N-eRc" firstAttribute="top" secondItem="cS9-IE-Z1V" secondAttribute="bottom" constant="6.3300000000000001" id="uOv-Tz-wil"/>
                                                             <constraint firstItem="rmH-Cq-IuT" firstAttribute="leading" secondItem="Hi8-R7-vD8" secondAttribute="leadingMargin" id="vAU-cy-KKv"/>
                                                         </constraints>
                                                         <size key="customSize" width="377" height="142"/>
@@ -422,13 +434,13 @@
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZU-rC-SZy">
-                                <rect key="frame" x="127" y="108" width="139" height="35"/>
+                                <rect key="frame" x="113.66666666666669" y="108" width="166" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="QNb-Es-GMq"/>
-                                    <constraint firstAttribute="width" constant="139" id="o4D-5I-kWC"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="139" id="o4D-5I-kWC"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="add a new task"/>
+                                <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system" title=" add a new task"/>
                                 <connections>
                                     <action selector="addTaskTapped:" destination="mXO-oG-wkf" eventType="touchUpInside" id="3zw-gt-FRv"/>
                                 </connections>
@@ -443,6 +455,7 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <toolbarAppearance key="compactScrollEdgeAppearance"/>
                             </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="i4j-b6-lOg"/>
@@ -548,7 +561,9 @@
         <image name="Background" width="433.33334350585938" height="429.66665649414062"/>
         <image name="blank-profile-picture-973460_1280" width="1280" height="1280"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="108"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <image name="v.square" catalog="system" width="128" height="114"/>
         <image name="xmark.app" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
